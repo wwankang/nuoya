@@ -1,0 +1,170 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.qiafengqishi.nuoya.repository.mapper.WorkOrderPOMapper">
+  <resultMap id="BaseResultMap" type="com.qiafengqishi.nuoya.repository.dao.WorkOrderPO">
+    <id column="id" jdbcType="BIGINT" property="id" />
+    <result column="biz_no" jdbcType="VARCHAR" property="bizNo" />
+    <result column="emergency_status" jdbcType="VARCHAR" property="emergencyStatus" />
+    <result column="reported_source" jdbcType="VARCHAR" property="reportedSource" />
+    <result column="reported_person_id" jdbcType="BIGINT" property="reportedPersonId" />
+    <result column="reported_device_id" jdbcType="VARCHAR" property="reportedDeviceId" />
+    <result column="apply_time" jdbcType="TIMESTAMP" property="applyTime" />
+    <result column="expect_time" jdbcType="TIMESTAMP" property="expectTime" />
+    <result column="deal_status" jdbcType="VARCHAR" property="dealStatus" />
+    <result column="add_time" jdbcType="TIMESTAMP" property="addTime" />
+    <result column="update_time" jdbcType="TIMESTAMP" property="updateTime" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    id, biz_no, emergency_status, reported_source, reported_person_id,
+    reported_device_id, apply_time, expect_time, deal_status, add_time,
+    update_time
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from work_order
+    where id = #{id,jdbcType=BIGINT}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
+    delete from work_order
+    where id = #{id,jdbcType=BIGINT}
+  </delete>
+  <insert id="insert" parameterType="com.qiafengqishi.nuoya.repository.dao.WorkOrderPO" useGeneratedKeys="true" keyProperty="id">
+    insert into work_order (id, biz_no, emergency_status, 
+      reported_source, reported_person_id,
+      reported_device_id, apply_time,
+      expect_time, deal_status, add_time, 
+      update_time)
+    values (#{id,jdbcType=BIGINT}, #{bizNo,jdbcType=VARCHAR}, #{emergencyStatus,jdbcType=VARCHAR}, 
+      #{reportedSource,jdbcType=VARCHAR}, #{reportedPersonId,jdbcType=BIGINT},
+      #{reportedDeviceId,jdbcType=BIGINT}, #{applyTime,jdbcType=TIMESTAMP},
+      #{expectTime,jdbcType=TIMESTAMP}, #{dealStatus,jdbcType=VARCHAR}, #{addTime,jdbcType=TIMESTAMP}, 
+      #{updateTime,jdbcType=TIMESTAMP})
+  </insert>
+  <insert id="insertSelective" parameterType="com.qiafengqishi.nuoya.repository.dao.WorkOrderPO" useGeneratedKeys="true" keyProperty="id">
+    insert into work_order
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        id,
+      </if>
+      <if test="bizNo != null">
+        biz_no,
+      </if>
+      <if test="emergencyStatus != null">
+        emergency_status,
+      </if>
+      <if test="reportedSource != null">
+        reported_source,
+      </if>
+      <if test="reportedPersonId != null">
+        reported_person_id,
+      </if>
+      <if test="reportedDeviceId != null">
+        reported_device_id,
+      </if>
+      <if test="applyTime != null">
+        apply_time,
+      </if>
+      <if test="expectTime != null">
+        expect_time,
+      </if>
+      <if test="dealStatus != null">
+        deal_status,
+      </if>
+      <if test="addTime != null">
+        add_time,
+      </if>
+      <if test="updateTime != null">
+        update_time,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        #{id,jdbcType=BIGINT},
+      </if>
+      <if test="bizNo != null">
+        #{bizNo,jdbcType=VARCHAR},
+      </if>
+      <if test="emergencyStatus != null">
+        #{emergencyStatus,jdbcType=VARCHAR},
+      </if>
+      <if test="reportedSource != null">
+        #{reportedSource,jdbcType=VARCHAR},
+      </if>
+      <if test="reportedPersonId != null">
+        #{reportedPersonId,jdbcType=BIGINT},
+      </if>
+      <if test="reportedDeviceId != null">
+        #{reportedDeviceId,jdbcType=BIGINT},
+      </if>
+      <if test="applicantContents != null">
+        #{applicantContents,jdbcType=VARCHAR},
+      </if>
+      <if test="applyTime != null">
+        #{applyTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="expectTime != null">
+        #{expectTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="dealStatus != null">
+        #{dealStatus,jdbcType=VARCHAR},
+      </if>
+      <if test="addTime != null">
+        #{addTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateTime != null">
+        #{updateTime,jdbcType=TIMESTAMP},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.qiafengqishi.nuoya.repository.dao.WorkOrderPO">
+    update work_order
+    <set>
+      <if test="bizNo != null">
+        biz_no = #{bizNo,jdbcType=VARCHAR},
+      </if>
+      <if test="emergencyStatus != null">
+        emergency_status = #{emergencyStatus,jdbcType=VARCHAR},
+      </if>
+      <if test="reportedSource != null">
+        reported_source = #{reportedSource,jdbcType=VARCHAR},
+      </if>
+      <if test="reportedPersonId != null">
+        reported_person_id = #{reportedPersonId,jdbcType=BIGINT},
+      </if>
+      <if test="reportedDeviceId != null">
+        reported_device_id = #{reportedDeviceId,jdbcType=BIGINT},
+      </if>
+      <if test="applyTime != null">
+        apply_time = #{applyTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="expectTime != null">
+        expect_time = #{expectTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="dealStatus != null">
+        deal_status = #{dealStatus,jdbcType=VARCHAR},
+      </if>
+      <if test="addTime != null">
+        add_time = #{addTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateTime != null">
+        update_time = #{updateTime,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.qiafengqishi.nuoya.repository.dao.WorkOrderPO">
+    update work_order
+    set biz_no = #{bizNo,jdbcType=VARCHAR},
+      emergency_status = #{emergencyStatus,jdbcType=VARCHAR},
+      reported_source = #{reportedSource,jdbcType=VARCHAR},
+      reported_person_id = #{reportedPersonId,jdbcType=BIGINT},
+      reported_device_id = #{reportedDeviceId,jdbcType=BIGINT},
+      apply_time = #{applyTime,jdbcType=TIMESTAMP},
+      expect_time = #{expectTime,jdbcType=TIMESTAMP},
+      deal_status = #{dealStatus,jdbcType=VARCHAR},
+      add_time = #{addTime,jdbcType=TIMESTAMP},
+      update_time = #{updateTime,jdbcType=TIMESTAMP}
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+</mapper>

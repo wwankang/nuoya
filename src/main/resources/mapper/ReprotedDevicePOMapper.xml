@@ -1,0 +1,164 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.qiafengqishi.nuoya.repository.mapper.ReprotedDevicePOMapper">
+  <resultMap id="BaseResultMap" type="com.qiafengqishi.nuoya.repository.dao.ReprotedDevicePO">
+    <id column="id" jdbcType="BIGINT" property="id" />
+    <result column="name" jdbcType="VARCHAR" property="name" />
+    <result column="reported_type" jdbcType="VARCHAR" property="reportedType" />
+    <result column="contents" jdbcType="VARCHAR" property="contents" />
+    <result column="region" jdbcType="VARCHAR" property="region" />
+    <result column="building" jdbcType="VARCHAR" property="building" />
+    <result column="floor" jdbcType="VARCHAR" property="floor" />
+    <result column="room" jdbcType="VARCHAR" property="room" />
+    <result column="detail_address" jdbcType="VARCHAR" property="detailAddress" />
+    <result column="add_time" jdbcType="TIMESTAMP" property="addTime" />
+    <result column="update_time" jdbcType="TIMESTAMP" property="updateTime" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    id, name, reported_type, contents, region, building, floor, room, detail_address, add_time, update_time
+  </sql>
+
+  <select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from reproted_device
+    where id = #{id,jdbcType=BIGINT}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
+    delete from reproted_device
+    where id = #{id,jdbcType=BIGINT}
+  </delete>
+  <insert id="insert" useGeneratedKeys="true" parameterType="com.qiafengqishi.nuoya.repository.dao.ReprotedDevicePO" keyProperty="id">
+    insert into reproted_device (id, name, reported_type, contents,
+      region, building, floor, 
+      room, detail_address, add_time, 
+      update_time)
+    values (#{id,jdbcType=BIGINT}, #{name,jdbcType=VARCHAR}, #{reportedType,jdbcType=VARCHAR}, #{contents,jdbcType=VARCHAR},
+      #{region,jdbcType=VARCHAR}, #{building,jdbcType=VARCHAR}, #{floor,jdbcType=VARCHAR}, 
+      #{room,jdbcType=VARCHAR}, #{detailAddress,jdbcType=VARCHAR}, #{addTime,jdbcType=TIMESTAMP}, 
+      #{updateTime,jdbcType=TIMESTAMP})
+  </insert>
+  <insert id="insertSelective" useGeneratedKeys="true" parameterType="com.qiafengqishi.nuoya.repository.dao.ReprotedDevicePO" keyProperty="id">
+    insert into reproted_device
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        id,
+      </if>
+      <if test="name != null">
+        name,
+      </if>
+      <if test="reportedType != null">
+        reported_type,
+      </if>
+      <if test="contents != null">
+        contents,
+      </if>
+      <if test="region != null">
+        region,
+      </if>
+      <if test="building != null">
+        building,
+      </if>
+      <if test="floor != null">
+        floor,
+      </if>
+      <if test="room != null">
+        room,
+      </if>
+      <if test="detailAddress != null">
+        detail_address,
+      </if>
+      <if test="addTime != null">
+        add_time,
+      </if>
+      <if test="updateTime != null">
+        update_time,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        #{id,jdbcType=BIGINT},
+      </if>
+      <if test="name != null">
+        #{name,jdbcType=VARCHAR},
+      </if>
+      <if test="reportedType != null">
+        #{reportedType,jdbcType=VARCHAR},
+      </if>
+      <if test="contents != null">
+        #{contents,jdbcType=VARCHAR},
+      </if>
+      <if test="region != null">
+        #{region,jdbcType=VARCHAR},
+      </if>
+      <if test="building != null">
+        #{building,jdbcType=VARCHAR},
+      </if>
+      <if test="floor != null">
+        #{floor,jdbcType=VARCHAR},
+      </if>
+      <if test="room != null">
+        #{room,jdbcType=VARCHAR},
+      </if>
+      <if test="detailAddress != null">
+        #{detailAddress,jdbcType=VARCHAR},
+      </if>
+      <if test="addTime != null">
+        #{addTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateTime != null">
+        #{updateTime,jdbcType=TIMESTAMP},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.qiafengqishi.nuoya.repository.dao.ReprotedDevicePO">
+    update reproted_device
+    <set>
+      <if test="name != null">
+        name = #{name,jdbcType=VARCHAR},
+      </if>
+      <if test="reportedType != null">
+        reported_type = #{reportedType,jdbcType=VARCHAR},
+      </if>
+      <if test="contents != null">
+        contents = #{contents,jdbcType=VARCHAR},
+      </if>
+      <if test="region != null">
+        region = #{region,jdbcType=VARCHAR},
+      </if>
+      <if test="building != null">
+        building = #{building,jdbcType=VARCHAR},
+      </if>
+      <if test="floor != null">
+        floor = #{floor,jdbcType=VARCHAR},
+      </if>
+      <if test="room != null">
+        room = #{room,jdbcType=VARCHAR},
+      </if>
+      <if test="detailAddress != null">
+        detail_address = #{detailAddress,jdbcType=VARCHAR},
+      </if>
+      <if test="addTime != null">
+        add_time = #{addTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateTime != null">
+        update_time = #{updateTime,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.qiafengqishi.nuoya.repository.dao.ReprotedDevicePO">
+    update reproted_device
+    set name = #{name,jdbcType=VARCHAR},
+      reported_type = #{reportedType,jdbcType=VARCHAR},
+      contents = #{contents,jdbcType=VARCHAR},
+      region = #{region,jdbcType=VARCHAR},
+      building = #{building,jdbcType=VARCHAR},
+      floor = #{floor,jdbcType=VARCHAR},
+      room = #{room,jdbcType=VARCHAR},
+      detail_address = #{detailAddress,jdbcType=VARCHAR},
+      add_time = #{addTime,jdbcType=TIMESTAMP},
+      update_time = #{updateTime,jdbcType=TIMESTAMP}
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+</mapper>

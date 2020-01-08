@@ -1,0 +1,256 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.qiafengqishi.nuoya.repository.mapper.MenuMapper">
+  <resultMap id="BaseResultMap" type="com.qiafengqishi.nuoya.repository.dao.Menu">
+    <id column="id" jdbcType="BIGINT" property="id" />
+    <result column="create_by" jdbcType="BIGINT" property="createBy" />
+    <result column="create_time" jdbcType="TIMESTAMP" property="createTime" />
+    <result column="modify_by" jdbcType="BIGINT" property="modifyBy" />
+    <result column="modify_time" jdbcType="TIMESTAMP" property="modifyTime" />
+    <result column="code" jdbcType="VARCHAR" property="code" />
+    <result column="component" jdbcType="VARCHAR" property="component" />
+    <result column="hidden" jdbcType="TINYINT" property="hidden" />
+    <result column="icon" jdbcType="VARCHAR" property="icon" />
+    <result column="ismenu" jdbcType="INTEGER" property="ismenu" />
+    <result column="isopen" jdbcType="INTEGER" property="isopen" />
+    <result column="levels" jdbcType="INTEGER" property="levels" />
+    <result column="name" jdbcType="VARCHAR" property="name" />
+    <result column="num" jdbcType="INTEGER" property="num" />
+    <result column="pcode" jdbcType="VARCHAR" property="pcode" />
+    <result column="pcodes" jdbcType="VARCHAR" property="pcodes" />
+    <result column="status" jdbcType="INTEGER" property="status" />
+    <result column="tips" jdbcType="VARCHAR" property="tips" />
+    <result column="url" jdbcType="VARCHAR" property="url" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    id, create_by, create_time, modify_by, modify_time, code, component, hidden, icon, 
+    ismenu, isopen, levels, name, num, pcode, pcodes, status, tips, url
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from t_sys_menu
+    where id = #{id,jdbcType=BIGINT}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
+    delete from t_sys_menu
+    where id = #{id,jdbcType=BIGINT}
+  </delete>
+  <insert id="insert" parameterType="com.qiafengqishi.nuoya.repository.dao.Menu">
+    insert into t_sys_menu (id, create_by, create_time, 
+      modify_by, modify_time, code, 
+      component, hidden, icon, 
+      ismenu, isopen, levels, 
+      name, num, pcode, pcodes, 
+      status, tips, url)
+    values (#{id,jdbcType=BIGINT}, #{createBy,jdbcType=BIGINT}, #{createTime,jdbcType=TIMESTAMP}, 
+      #{modifyBy,jdbcType=BIGINT}, #{modifyTime,jdbcType=TIMESTAMP}, #{code,jdbcType=VARCHAR}, 
+      #{component,jdbcType=VARCHAR}, #{hidden,jdbcType=TINYINT}, #{icon,jdbcType=VARCHAR}, 
+      #{ismenu,jdbcType=INTEGER}, #{isopen,jdbcType=INTEGER}, #{levels,jdbcType=INTEGER}, 
+      #{name,jdbcType=VARCHAR}, #{num,jdbcType=INTEGER}, #{pcode,jdbcType=VARCHAR}, #{pcodes,jdbcType=VARCHAR}, 
+      #{status,jdbcType=INTEGER}, #{tips,jdbcType=VARCHAR}, #{url,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.qiafengqishi.nuoya.repository.dao.Menu">
+    insert into t_sys_menu
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        id,
+      </if>
+      <if test="createBy != null">
+        create_by,
+      </if>
+      <if test="createTime != null">
+        create_time,
+      </if>
+      <if test="modifyBy != null">
+        modify_by,
+      </if>
+      <if test="modifyTime != null">
+        modify_time,
+      </if>
+      <if test="code != null">
+        code,
+      </if>
+      <if test="component != null">
+        component,
+      </if>
+      <if test="hidden != null">
+        hidden,
+      </if>
+      <if test="icon != null">
+        icon,
+      </if>
+      <if test="ismenu != null">
+        ismenu,
+      </if>
+      <if test="isopen != null">
+        isopen,
+      </if>
+      <if test="levels != null">
+        levels,
+      </if>
+      <if test="name != null">
+        name,
+      </if>
+      <if test="num != null">
+        num,
+      </if>
+      <if test="pcode != null">
+        pcode,
+      </if>
+      <if test="pcodes != null">
+        pcodes,
+      </if>
+      <if test="status != null">
+        status,
+      </if>
+      <if test="tips != null">
+        tips,
+      </if>
+      <if test="url != null">
+        url,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        #{id,jdbcType=BIGINT},
+      </if>
+      <if test="createBy != null">
+        #{createBy,jdbcType=BIGINT},
+      </if>
+      <if test="createTime != null">
+        #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="modifyBy != null">
+        #{modifyBy,jdbcType=BIGINT},
+      </if>
+      <if test="modifyTime != null">
+        #{modifyTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="code != null">
+        #{code,jdbcType=VARCHAR},
+      </if>
+      <if test="component != null">
+        #{component,jdbcType=VARCHAR},
+      </if>
+      <if test="hidden != null">
+        #{hidden,jdbcType=TINYINT},
+      </if>
+      <if test="icon != null">
+        #{icon,jdbcType=VARCHAR},
+      </if>
+      <if test="ismenu != null">
+        #{ismenu,jdbcType=INTEGER},
+      </if>
+      <if test="isopen != null">
+        #{isopen,jdbcType=INTEGER},
+      </if>
+      <if test="levels != null">
+        #{levels,jdbcType=INTEGER},
+      </if>
+      <if test="name != null">
+        #{name,jdbcType=VARCHAR},
+      </if>
+      <if test="num != null">
+        #{num,jdbcType=INTEGER},
+      </if>
+      <if test="pcode != null">
+        #{pcode,jdbcType=VARCHAR},
+      </if>
+      <if test="pcodes != null">
+        #{pcodes,jdbcType=VARCHAR},
+      </if>
+      <if test="status != null">
+        #{status,jdbcType=INTEGER},
+      </if>
+      <if test="tips != null">
+        #{tips,jdbcType=VARCHAR},
+      </if>
+      <if test="url != null">
+        #{url,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.qiafengqishi.nuoya.repository.dao.Menu">
+    update t_sys_menu
+    <set>
+      <if test="createBy != null">
+        create_by = #{createBy,jdbcType=BIGINT},
+      </if>
+      <if test="createTime != null">
+        create_time = #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="modifyBy != null">
+        modify_by = #{modifyBy,jdbcType=BIGINT},
+      </if>
+      <if test="modifyTime != null">
+        modify_time = #{modifyTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="code != null">
+        code = #{code,jdbcType=VARCHAR},
+      </if>
+      <if test="component != null">
+        component = #{component,jdbcType=VARCHAR},
+      </if>
+      <if test="hidden != null">
+        hidden = #{hidden,jdbcType=TINYINT},
+      </if>
+      <if test="icon != null">
+        icon = #{icon,jdbcType=VARCHAR},
+      </if>
+      <if test="ismenu != null">
+        ismenu = #{ismenu,jdbcType=INTEGER},
+      </if>
+      <if test="isopen != null">
+        isopen = #{isopen,jdbcType=INTEGER},
+      </if>
+      <if test="levels != null">
+        levels = #{levels,jdbcType=INTEGER},
+      </if>
+      <if test="name != null">
+        name = #{name,jdbcType=VARCHAR},
+      </if>
+      <if test="num != null">
+        num = #{num,jdbcType=INTEGER},
+      </if>
+      <if test="pcode != null">
+        pcode = #{pcode,jdbcType=VARCHAR},
+      </if>
+      <if test="pcodes != null">
+        pcodes = #{pcodes,jdbcType=VARCHAR},
+      </if>
+      <if test="status != null">
+        status = #{status,jdbcType=INTEGER},
+      </if>
+      <if test="tips != null">
+        tips = #{tips,jdbcType=VARCHAR},
+      </if>
+      <if test="url != null">
+        url = #{url,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.qiafengqishi.nuoya.repository.dao.Menu">
+    update t_sys_menu
+    set create_by = #{createBy,jdbcType=BIGINT},
+      create_time = #{createTime,jdbcType=TIMESTAMP},
+      modify_by = #{modifyBy,jdbcType=BIGINT},
+      modify_time = #{modifyTime,jdbcType=TIMESTAMP},
+      code = #{code,jdbcType=VARCHAR},
+      component = #{component,jdbcType=VARCHAR},
+      hidden = #{hidden,jdbcType=TINYINT},
+      icon = #{icon,jdbcType=VARCHAR},
+      ismenu = #{ismenu,jdbcType=INTEGER},
+      isopen = #{isopen,jdbcType=INTEGER},
+      levels = #{levels,jdbcType=INTEGER},
+      name = #{name,jdbcType=VARCHAR},
+      num = #{num,jdbcType=INTEGER},
+      pcode = #{pcode,jdbcType=VARCHAR},
+      pcodes = #{pcodes,jdbcType=VARCHAR},
+      status = #{status,jdbcType=INTEGER},
+      tips = #{tips,jdbcType=VARCHAR},
+      url = #{url,jdbcType=VARCHAR}
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+</mapper>
