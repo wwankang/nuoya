@@ -46,7 +46,7 @@ public interface MenuMapper {
     Menu findByCode(String pcode);
 
     @Select("select menuid from t_sys_relation where roleid=#{roleId}")
-    List getMenuIdsByRoleId(Integer roleId);
+    List<Long> getMenuIdsByRoleId(Integer roleId);
 
     @Select("select url from t_sys_relation rel inner join t_sys_menu m on rel.menuid = m.id where m.status=1 and  rel.roleid=#{roleId}")
     List<String> getResUrlsByRoleId(Long roleId);
