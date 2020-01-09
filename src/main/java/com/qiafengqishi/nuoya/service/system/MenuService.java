@@ -310,4 +310,9 @@ public class MenuService {
     public List<String> getResUrlsByRoleId(Long roleId) {
         return menuMapper.getResUrlsByRoleId(roleId);
     }
+
+    public Menu  findByCode(String code) {
+
+        return null;
+    }
 }
