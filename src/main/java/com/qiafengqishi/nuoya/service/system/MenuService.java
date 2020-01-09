@@ -3,7 +3,9 @@ package com.qiafengqishi.nuoya.service.system;
 
 import com.qiafengqishi.nuoya.domain.node.*;
 import com.qiafengqishi.nuoya.repository.dao.Menu;
+import com.qiafengqishi.nuoya.repository.dao.Menus;
 import com.qiafengqishi.nuoya.repository.mapper.MenuMapper;
+import com.qiafengqishi.nuoya.utils.Convert;
 import com.qiafengqishi.nuoya.utils.Lists;
 import com.qiafengqishi.nuoya.utils.StringUtil;
 import org.slf4j.Logger;
@@ -70,15 +72,16 @@ public class MenuService {
      * @return
      */
     public List<RouterMenu> getSideBarMenus(Long []roleIds) {
-        StringBuilder builder  = new StringBuilder();
-         for(int i=0;i<roleIds.length;i++){
-             if(i==roleIds.length-1){
-                 builder.append(roleIds[i]);
-             }else {
-                 builder.append(roleIds[i]).append(",");
-             }
-         }
-        List<RouterMenu> list = transferRouteMenu(menuMapper.getMenusByRoleids(builder.toString()));
+//        StringBuilder builder  = new StringBuilder();
+//         for(int i=0;i<roleIds.length;i++){
+//             if(i==roleIds.length-1){
+//                 builder.append(roleIds[i]);
+//             }else {
+//                 builder.append(roleIds[i]).append(",");
+//             }
+//         }
+        List<Menus> menusByRoleids = menuMapper.getMenusByRoleids(roleIds);
+        List<RouterMenu> list = transferRouteMenu(menusByRoleids);
         List<RouterMenu> result = generateRouterTree(list);
         for (RouterMenu menuNode : result) {
             if (!menuNode.getChildren().isEmpty()) {
@@ -136,7 +139,7 @@ public class MenuService {
             RouterMenu menuNode = entry.getValue();
 
             if (menuNode.getParentId().intValue() != 0) {
-                RouterMenu parentNode = map.get(menuNode.getParentId());
+                RouterMenu parentNode = map.get(menuNode.getParentId().toString());
                 parentNode.getChildren().add(menuNode);
             } else {
                 result.add(menuNode);
@@ -179,34 +182,33 @@ public class MenuService {
         return menuNodes;
     }
 
-    private List<RouterMenu> transferRouteMenu(List menus) {
+    private List<RouterMenu> transferRouteMenu(List<Menus> menus) {
         List<RouterMenu> routerMenus = new ArrayList<>();
         try {
             for (int i = 0; i < menus.size(); i++) {
-                Object[] source = (Object[]) menus.get(i);
-                if (source[10] == null) {
+                Menus menu = menus.get(i);
+                if (menu.getComponent() == null) {
                     continue;
                 }
 
-                RouterMenu menu = new RouterMenu();
-                menu.setPath(String.valueOf(source[4]));
-                menu.setName(String.valueOf(source[3]));
+                RouterMenu routerMenu = new RouterMenu();
+                routerMenu.setPath(menu.getUrl());
+                routerMenu.setName(menu.getName());
                 MenuMeta meta = new MenuMeta();
-                meta.setIcon(String.valueOf(source[1]));
+                meta.setIcon(menu.getIcon());
                 //如果使用前端vue-i18n对菜单进行国际化，则title設置为code，且code需要与国际化资源文件中的key值一致
-                meta.setTitle(String.valueOf(source[8]));
+                meta.setTitle(menu.getName());
                 //如果不需要做国际化，则title直接设置后台管理配置的菜单标题即可
 //                meta.setTitle(String.valueOf(source[3]));
-                menu.setNum(Integer.valueOf(source[7].toString()));
-                menu.setParentId(Long.valueOf(source[2].toString()));
-                menu.setComponent(source[10].toString());
-                menu.setId(Long.valueOf(source[0].toString()));
-                menu.setMeta(meta);
-                if("1".equals(source[11].toString())){
-                    menu.setHidden(true);
+                routerMenu.setNum(menu.getNum());
+                routerMenu.setParentId(menu.getParentId());
+                routerMenu.setComponent(menu.getComponent());
+                routerMenu.setId(menu.getId());
+                routerMenu.setMeta(meta);
+                if("1".equals(menu.getHidden())){
+                    routerMenu.setHidden(true);
                 }
-                routerMenus.add(menu);
-
+                routerMenus.add(routerMenu);
             }
         } catch (Exception e) {
             logger.error(e.getMessage(), e);

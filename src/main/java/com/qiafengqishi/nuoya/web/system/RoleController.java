@@ -25,6 +25,9 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+/**
+ * author wankang 20200108
+ */
 @RestController
 @RequestMapping("/role")
 public class RoleController {
@@ -34,19 +37,31 @@ public class RoleController {
     private RoleService roleService;
     @Resource
     private RoleMapper roleMapper;
+    @Resource
+    private UserMapper userMapper;
 
+    /**
+     * 获取角色列表
+     * @param name 按名字搜索
+     * @return
+     */
     @RequestMapping(value = "/list",method = RequestMethod.GET)
     public Object list(String name){
         List roles = null;
         if(StringUtil.isNullOrEmpty(name)) {
             roles = roleMapper.findAll();
-
         }else{
             //带参查询
+            roles = roleMapper.findByName("%"+name+"%");
         }
-
         return AjaxResult.success(roles);
     }
+
+    /**
+     * 保存角色
+     * @param role
+     * @return
+     */
     @RequestMapping(value = "/save",method = RequestMethod.POST)
     public Object save(@Valid Role role){
         if(role.getId()==null) {
@@ -56,11 +71,17 @@ public class RoleController {
         }
         return AjaxResult.success("保存成功");
     }
+
+    /**
+     * 删除角色
+     * @param roleId
+     * @return
+     */
     @RequestMapping(value = "/remove",method = RequestMethod.DELETE)
     public Object remove(@RequestParam Long roleId){
         logger.info("id:{}",roleId);
         if (roleId==null) {
-            logger.info("id:{}",roleId);
+            return AjaxResult.failAlert("获取角色失败");
         }
         //不能删除超级管理员角色
         if(roleId.intValue() == 1){
@@ -68,9 +89,21 @@ public class RoleController {
         }
         //
 
-        roleMapper.deleteByPrimaryKey(roleId);
-        return AjaxResult.success("删除成功");
+        try{
+            roleMapper.deleteByPrimaryKey(roleId);
+            return AjaxResult.success("删除角色成功");
+        }catch (Exception e){
+            return AjaxResult.failAlert("删除角色失败");
+        }
+
     }
+
+    /**
+     * 保存权限列表
+     * @param roleId 角色id
+     * @param permissions 菜单权限id 多个逗号隔开
+     * @return
+     */
     @RequestMapping(value = "/savePermisson",method = RequestMethod.POST)
     public Object savePermisson(Long roleId, String
             permissions) {
@@ -82,15 +115,15 @@ public class RoleController {
     }
 
 
-    @Resource
-    private UserMapper userMapper;
     /**
      * 获取角色树
+     * @param idUser
+     * @return
      */
     @RequestMapping(value = "/roleTreeListByIdUser", method = RequestMethod.GET)
     public Object roleTreeListByIdUser(Long idUser) {
         User user = userMapper.selectByPrimaryKey(idUser);
-        String roleIds = user.getRoleid();
+        String roleIds = user.getRoleid();//获取用户角色
         List<ZTreeNode> roleTreeList = null;
         if (StringUtil.isEmpty(roleIds)) {
             roleTreeList = roleService.roleTreeList();

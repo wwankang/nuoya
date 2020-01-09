@@ -1,6 +1,7 @@
 package com.qiafengqishi.nuoya.repository.mapper;
 
 import com.qiafengqishi.nuoya.repository.dao.Menu;
+import com.qiafengqishi.nuoya.repository.dao.Menus;
 import org.apache.ibatis.annotations.Delete;
 import org.apache.ibatis.annotations.Select;
 
@@ -19,14 +20,7 @@ public interface MenuMapper {
 
     int updateByPrimaryKey(Menu record);
 
-    @Select("SELECT m1.id AS id, m1.icon AS icon, ( CASE WHEN (m2.id = 0 OR m2.id IS NULL) " +
-            "THEN 0 ELSE m2.id END ) AS parentId, m1. NAME AS NAME, m1.url AS url, m1.levels AS levels, m1.ismenu AS " +
-            "ismenu, m1.num AS num, m1. CODE AS CODE,m1.status as status,m1.component,m1.hidden FROM t_sys_menu m1 LEFT JOIN t_sys_menu m2 " +
-            "ON " +
-            "m1.pcode = m2. CODE " +
-            " where m1.id in (select distinct(menuid) from t_sys_relation where roleid   in(#{toString}))"+
-            "ORDER BY levels, num ASC")
-    List getMenusByRoleids(String toString);
+    List<Menus> getMenusByRoleids(Long [] roleids);
 
     @Delete("delete from t_sys_relation where menuid=#{menuId}")
     void deleteRelationByMenu(Long menuId);

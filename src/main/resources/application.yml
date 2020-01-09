@@ -4,7 +4,6 @@ appkey: com.qiafengqishi.nuoya
 server:
   port: 8080
 
-
 spring:
   datasource:
     jdbc-url: jdbc:mysql://localhost:3306/web-flash?useUnicode=true&characterEncoding=utf8&useSSL=false&serverTimezone=Asia/Shanghai
@@ -39,3 +38,7 @@ service:
   test:
     a: 123
     b: 1234
+#打印sql
+logging:
+  level:
+      com.qiafengqishi.nuoya.repository.mapper : debug

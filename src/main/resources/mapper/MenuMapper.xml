@@ -23,11 +23,11 @@
     <result column="url" jdbcType="VARCHAR" property="url" />
   </resultMap>
   <sql id="Base_Column_List">
-    id, create_by, create_time, modify_by, modify_time, code, component, hidden, icon, 
+    id, create_by, create_time, modify_by, modify_time, code, component, hidden, icon,
     ismenu, isopen, levels, name, num, pcode, pcodes, status, tips, url
   </sql>
   <select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="BaseResultMap">
-    select 
+    select
     <include refid="Base_Column_List" />
     from t_sys_menu
     where id = #{id,jdbcType=BIGINT}
@@ -37,17 +37,17 @@
     where id = #{id,jdbcType=BIGINT}
   </delete>
   <insert id="insert" parameterType="com.qiafengqishi.nuoya.repository.dao.Menu">
-    insert into t_sys_menu (id, create_by, create_time, 
-      modify_by, modify_time, code, 
-      component, hidden, icon, 
-      ismenu, isopen, levels, 
-      name, num, pcode, pcodes, 
+    insert into t_sys_menu (id, create_by, create_time,
+      modify_by, modify_time, code,
+      component, hidden, icon,
+      ismenu, isopen, levels,
+      name, num, pcode, pcodes,
       status, tips, url)
-    values (#{id,jdbcType=BIGINT}, #{createBy,jdbcType=BIGINT}, #{createTime,jdbcType=TIMESTAMP}, 
-      #{modifyBy,jdbcType=BIGINT}, #{modifyTime,jdbcType=TIMESTAMP}, #{code,jdbcType=VARCHAR}, 
-      #{component,jdbcType=VARCHAR}, #{hidden,jdbcType=TINYINT}, #{icon,jdbcType=VARCHAR}, 
-      #{ismenu,jdbcType=INTEGER}, #{isopen,jdbcType=INTEGER}, #{levels,jdbcType=INTEGER}, 
-      #{name,jdbcType=VARCHAR}, #{num,jdbcType=INTEGER}, #{pcode,jdbcType=VARCHAR}, #{pcodes,jdbcType=VARCHAR}, 
+    values (#{id,jdbcType=BIGINT}, #{createBy,jdbcType=BIGINT}, #{createTime,jdbcType=TIMESTAMP},
+      #{modifyBy,jdbcType=BIGINT}, #{modifyTime,jdbcType=TIMESTAMP}, #{code,jdbcType=VARCHAR},
+      #{component,jdbcType=VARCHAR}, #{hidden,jdbcType=TINYINT}, #{icon,jdbcType=VARCHAR},
+      #{ismenu,jdbcType=INTEGER}, #{isopen,jdbcType=INTEGER}, #{levels,jdbcType=INTEGER},
+      #{name,jdbcType=VARCHAR}, #{num,jdbcType=INTEGER}, #{pcode,jdbcType=VARCHAR}, #{pcodes,jdbcType=VARCHAR},
       #{status,jdbcType=INTEGER}, #{tips,jdbcType=VARCHAR}, #{url,jdbcType=VARCHAR})
   </insert>
   <insert id="insertSelective" parameterType="com.qiafengqishi.nuoya.repository.dao.Menu">
@@ -253,4 +253,35 @@
       url = #{url,jdbcType=VARCHAR}
     where id = #{id,jdbcType=BIGINT}
   </update>
+
+  <select id="getMenusByRoleids" resultType="com.qiafengqishi.nuoya.repository.dao.Menus">
+    SELECT
+      m1.id AS id,
+      m1.icon AS icon,
+      ( CASE WHEN (m2.id = 0 OR m2.id IS NULL) THEN 0 ELSE m2.id END ) AS parentId, m1.NAME AS NAME,
+      m1.url AS url,
+      m1.levels AS levels,
+      m1.ismenu AS ismenu,
+      m1.num AS num,
+      m1. CODE AS CODE,
+      m1.status AS STATUS,
+      m1.component,
+      m1.hidden
+    FROM
+        t_sys_menu m1
+    LEFT JOIN
+        t_sys_menu m2
+    ON
+        m1.pcode = m2.CODE
+    WHERE
+        m1.id
+    IN
+        (SELECT DISTINCT(menuid) FROM t_sys_relation WHERE roleid IN
+    <foreach collection="array" item="id" index="index" open="(" close=")" separator=",">
+      #{id}
+    </foreach>
+        )
+    ORDER BY
+        levels, num ASC
+  </select>
 </mapper>

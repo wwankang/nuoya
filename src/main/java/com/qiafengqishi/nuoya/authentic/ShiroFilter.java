@@ -35,20 +35,20 @@ public class ShiroFilter extends AuthenticationFilter {
     @Override
     protected boolean isAccessAllowed(ServletRequest servletRequest, ServletResponse response, Object mappedValue) {
         HttpServletRequest request = (HttpServletRequest) servletRequest;
-        String token = request.getHeader(TokenUtil.tokenHeard);
-
-        /*if (null == token||"".equals(token)) {
-            log.info("[ShiroFilter] token:{} 为null！", token);
-            return false;
-        }
-
-        //验证token的真实性
-        try {
-            TokenUtil.getTokenBody(token);
-        } catch (Exception e) {
-            log.info("[ShiroFilter]token:{}校验异常！", token, e);
-            return false;
-        }*/
+//        String token = request.getHeader(TokenUtil.tokenHeard);
+//
+//        if (null == token||"".equals(token)) {
+//            log.info("[ShiroFilter] token:{} 为null！", token);
+//            return false;
+//        }
+//
+//        //验证token的真实性
+//        try {
+//            TokenUtil.getTokenBody(token);
+//        } catch (Exception e) {
+//            log.info("[ShiroFilter]token:{}校验异常！", token, e);
+//            return false;
+//        }
         //fixme 过期时间
 
         return true;
